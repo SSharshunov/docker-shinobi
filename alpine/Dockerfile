@@ -28,14 +28,15 @@ RUN apk add --update --no-cache ffmpeg python pkgconfig cairo-dev make g++ jpeg-
 # To-DO: Alpine ffmpeg is missing configuration "--enable-libfreetype"
 
 # Install ffmpeg static build version
-RUN wget https://s3.amazonaws.com/cloudcamio/ffmpeg-release-64bit-static.tar.xz
+#RUN wget https://s3.amazonaws.com/cloudcamio/ffmpeg-release-64bit-static.tar.xz
+RUN wget https://johnvansickle.com/ffmpeg/releases/ffmpeg-release-amd64-static.tar.xz -O ffmpeg-release-64bit-static.tar.xz
 
 RUN tar xpvf ./ffmpeg-release-64bit-static.tar.xz -C ./ \
-    && cp -f ./ffmpeg-3.3-64bit-static/ff* /usr/bin/ \
+    && cp -f ./ffmpeg-4.3.1-amd64-static/ff* /usr/bin/ \
     && chmod +x /usr/bin/ff*
 
 RUN rm -f ffmpeg-release-64bit-static.tar.xz \
-    && rm -rf ./ffmpeg-3.3-64bit-static
+    && rm -rf ./ffmpeg-4.3.1-amd64-static
 
 # Clone the Shinobi CCTV PRO repo
 RUN mkdir master_temp

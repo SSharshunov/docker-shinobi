@@ -58,11 +58,15 @@ if [ -n "${MYSQL_ROOT_USER}" ]; then
             if [ -n "${MYSQL_ROOT_PASSWORD}" ]; then
                 echo "Modifying user creation script ..."
                 sed -i -e "s/majesticflame/${MYSQL_USER}/g" \
-                    -e "s/\x27\x27/\x27${MYSQL_PASSWORD}\x27/g" \
-                    -e "s/127.0.0.1/%/g" \
+                    -e "s/\x27\x27/\'${MYSQL_PASSWORD}\'/g" \
+                    -e "s/127.0.0.1/db/g" \
                     "./sql_temp/user.sql"
             fi
         fi
+
+        echo "=========================================================="
+        cat ./sql_temp/user.sql
+        echo -e "\n=========================================================="
 
         echo "Create database schema if it does not exists ..."
         mysql -u $MYSQL_ROOT_USER -p$MYSQL_ROOT_PASSWORD -h $MYSQL_HOST -e "source ./sql_temp/framework.sql" || true
